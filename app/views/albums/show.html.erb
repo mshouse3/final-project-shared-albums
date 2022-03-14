@@ -1,0 +1,86 @@
+<div>
+  <div>
+    <h1>
+      Album #<%= @the_album.id %> details
+    </h1>
+
+    <div>
+      <div>
+        <a href="/albums">
+          Go back
+        </a>
+      </div>
+
+      <div>
+        <a href="/delete_album/<%= @the_album.id %>">
+          Delete album
+        </a>
+      </div>
+    </div>
+
+    <dl>
+      <dt>
+        Owner
+      </dt>
+      <dd>
+        <%= @the_album.owner_id %>
+      </dd>
+
+      <dt>
+        Title
+      </dt>
+      <dd>
+        <%= @the_album.title %>
+      </dd>
+
+      <dt>
+        Created at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_album.created_at) %> ago
+      </dd>
+
+      <dt>
+        Updated at
+      </dt>
+      <dd>
+        <%= time_ago_in_words(@the_album.updated_at) %> ago
+      </dd>
+    </dl>
+  </div>
+</div>
+
+<hr>
+
+
+<div>
+  <div>
+    <h2>
+      Edit album
+    </h2>
+
+    <form action="/modify_album/<%= @the_album.id %>"  method="post" >
+      <div>
+        <label for="owner_id_box">
+          Owner
+        </label>
+
+        <input type="text" id="owner_id_box" name="query_owner_id" value="<%= @the_album.owner_id %>">
+      </div>
+
+      <div>
+        <label for="title_box">
+          Title
+        </label>
+
+        <input type="text" id="title_box" name="query_title" value="<%= @the_album.title %>">
+      </div>
+
+      <button>
+        Update album
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>

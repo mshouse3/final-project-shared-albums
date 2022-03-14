@@ -1,0 +1,118 @@
+<div>
+  <div>
+    <h1>
+      List of all album invitations
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<div>
+  <div>
+    <h2>
+      Add a new album invitation
+    </h2>
+
+    <form action="/insert_album_invitation" method="post">
+      <div>
+        <label for="owner_id_box">
+          Owner
+        </label>
+
+        <input type="text" id="owner_id_box" name="query_owner_id">
+      </div>
+
+      <div>
+        <label for="member_id_box">
+          Member
+        </label>
+
+        <input type="text" id="member_id_box" name="query_member_id">
+      </div>
+
+      <div>
+        <label for="album_id_box">
+          Album
+        </label>
+
+        <input type="text" id="album_id_box" name="query_album_id">
+      </div>
+
+      <button>
+        Create album invitation
+      </button>
+    </form>
+  </div>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          ID
+        </th>
+
+        <th>
+          Owner
+        </th>
+
+        <th>
+          Member
+        </th>
+
+        <th>
+          Album
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+          Updated at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_album_invitations.each do |an_album_invitation| %>
+      <tr>
+        <td>
+          <%= an_album_invitation.id %>
+        </td>
+
+        <td>
+          <%= an_album_invitation.owner_id %>
+        </td>
+
+        <td>
+          <%= an_album_invitation.member_id %>
+        </td>
+
+        <td>
+          <%= an_album_invitation.album_id %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(an_album_invitation.created_at) %> ago
+        </td>
+        <td>
+          <%= time_ago_in_words(an_album_invitation.updated_at) %> ago
+        </td>
+
+        <td>
+          <a href="/album_invitations/<%= an_album_invitation.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
