@@ -123,7 +123,7 @@
 <% end %>
 
 <% if @the_photo.album.owner.id == @current_user.id || @the_photo.owner.id == @current_user.id%>
-  <form action="/delete_photo/<%= @the_photo.id %>"  method="post" >
+  <form action="/delete_photo/<%= @the_photo.id %>">
     <div>
       <button>
           Delete photo

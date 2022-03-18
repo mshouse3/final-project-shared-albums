@@ -30,7 +30,10 @@ class AlbumsController < ApplicationController
 
     if the_album.valid?
       the_album.save
-      redirect_to("/users/#{the_album.owner.username}/albums/#{the_album.title}", { :notice => "Album created successfully." })
+      
+      redirect_to("/insert_self_album_invitation/#{the_album.id}")
+
+      #redirect_to("/users/#{the_album.owner.username}/albums/#{the_album.title}", { :notice => "Album created successfully." })
     else
       redirect_to("/users/#{@current_user.username}", { :alert => the_album.errors.full_messages.to_sentence })
     end
@@ -56,7 +59,7 @@ class AlbumsController < ApplicationController
 
     the_album.destroy
 
-    redirect_to("/users/#{@current_user.username}/albums/#{the_album.title}", { :notice => "Album deleted successfully."} )
+    redirect_to("/users/#{@current_user.username}/", { :notice => "Album deleted successfully."} )
   end
 
   def manage

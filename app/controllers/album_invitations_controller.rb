@@ -58,4 +58,18 @@ class AlbumInvitationsController < ApplicationController
       redirect_to("/users/#{@current_user.username}/albums/#{the_album_invitation.album.title}/edit", { :notice => "Album invitation deleted successfully."} )
     end
   end
+
+  def add_self
+    the_album_invitation = AlbumInvitation.new
+    the_album_invitation.owner_id = @current_user.id
+    the_album_invitation.member_id = @current_user.id
+    the_album_invitation.album_id = params.fetch("album_id")
+
+    if the_album_invitation.valid?
+      the_album_invitation.save
+      redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}/edit", { :notice => "Album created successfully." })
+    else
+      redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}/edit", { :alert => the_album_invitation.errors.full_messages.to_sentence })
+    end
+  end
 end

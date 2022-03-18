@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   # CREATE
   post("/insert_album_invitation", { :controller => "album_invitations", :action => "create" })
+  get("/insert_self_album_invitation/:album_id", { :controller => "album_invitations", :action => "add_self" })
           
   # READ
   get("/album_invitations", { :controller => "album_invitations", :action => "index" })

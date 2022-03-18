@@ -156,11 +156,17 @@
             </td>
 
             <td>
-              <form action="/delete_friend_request/<%= a_friend_request.id %>" method="post">
-                <button>
-                  Remove friend
-                </button>
-              </form>
+              <% if @the_user.id == @current_user.id %>
+                <form action="/delete_friend_request/<%= a_friend_request.id %>" method="post">
+                  <button>
+                    Remove friend
+                  </button>
+                </form>
+              <% else %>
+                <a href="/users/<%= @the_friend %>">
+                  Go to profile
+                </a>
+              <% end %>
             </td>
           </tr>
           <% end %>

@@ -3,6 +3,12 @@
   <a href="/users/<%= @the_album.owner.username %>/albums/<%= @the_album.title %>">Go back</a>
 </dl>
 
+<div>
+  <a href="/delete_album/<%= @the_album.id %>">
+    Delete album
+  </a>
+</div>
+
 <h2>Edit title</h2>
   <form action="/modify_album/<%= @the_album.id %>"  method="post" >
 

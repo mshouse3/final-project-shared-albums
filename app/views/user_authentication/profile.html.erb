@@ -100,7 +100,7 @@
       </form>
     </div>
   <% end %>
-  <h2>Other Albums</h2>
+  <h2>All Albums</h2>
 
   <table border="1">
     <tr>
@@ -116,7 +116,7 @@
       </th>
     </tr>
 
-    <% @current_user.albums.each do |an_album| %>
+    <% @the_user.albums.each do |an_album| %>
     <tr>
 
       <td>

@@ -57,6 +57,6 @@ class PhotosController < ApplicationController
 
     the_photo.destroy
 
-    redirect_to("/photos", { :notice => "Photo deleted successfully."} )
+    redirect_to("/users/#{the_photo.album.owner.username}/albums/#{the_photo.album.title}", { :notice => "Photo deleted successfully."} )
   end
 end

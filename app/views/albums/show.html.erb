@@ -11,13 +11,7 @@
         </a>
       </div>
 
-      <% if @the_album.owner.id == @current_user.id %>
-        <div>
-          <a href="/delete_album/<%= @the_album.id %>">
-            Delete album
-          </a>
-        </div>
-      <% else %>
+      <% if @the_album.owner.id != @current_user.id %>
         <div>
           <a href="/delete_album_invitation/<%= @the_album.id %>">
             Leave album
