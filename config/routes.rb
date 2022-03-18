@@ -29,9 +29,11 @@ Rails.application.routes.draw do
   # READ
   get("/albums", { :controller => "albums", :action => "index" })
   
-  get("/users/:the_username/:album_title", { :controller => "albums", :action => "show" })
+  get("/users/:the_username/albums/:album_title", { :controller => "albums", :action => "show" })
   
   # UPDATE
+
+  get("/users/:the_username/albums/:album_title/edit", { :controller => "albums", :action => "manage"})
   
   post("/modify_album/:path_id", { :controller => "albums", :action => "update" })
   
@@ -105,7 +107,7 @@ Rails.application.routes.draw do
   # READ
   get("/photos", { :controller => "photos", :action => "index" })
   
-  get("/photos/:path_id", { :controller => "photos", :action => "show" })
+  get("/users/:the_username/albums/:album_title/photos/:path_id", { :controller => "photos", :action => "show" })
   
   # UPDATE
   

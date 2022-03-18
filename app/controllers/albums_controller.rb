@@ -29,7 +29,7 @@ class AlbumsController < ApplicationController
 
     if the_album.valid?
       the_album.save
-      redirect_to("/users/#{the_album.owner.username}/#{the_album.title}", { :notice => "Album created successfully." })
+      redirect_to("/users/#{the_album.owner.username}/albums/#{the_album.title}", { :notice => "Album created successfully." })
     else
       redirect_to("/users/#{@current_user.username}", { :alert => the_album.errors.full_messages.to_sentence })
     end
@@ -43,9 +43,9 @@ class AlbumsController < ApplicationController
 
     if the_album.valid?
       the_album.save
-      redirect_to("/users/#{the_album.owner.username}/#{the_album.title}", { :notice => "Album updated successfully."} )
+      redirect_to("/users/#{the_album.owner.username}/albums/#{the_album.title}", { :notice => "Album updated successfully."} )
     else
-      redirect_to("/users/#{the_album.owner.username}/#{the_album.title}", { :alert => album.errors.full_messages.to_sentence })
+      redirect_to("/users/#{the_album.owner.username}/albums/#{the_album.title}", { :alert => album.errors.full_messages.to_sentence })
     end
   end
 
@@ -55,6 +55,14 @@ class AlbumsController < ApplicationController
 
     the_album.destroy
 
-    redirect_to("/users/#{@current_user.username}/#{the_album.title}", { :notice => "Album deleted successfully."} )
+    redirect_to("/users/#{@current_user.username}/albums/#{the_album.title}", { :notice => "Album deleted successfully."} )
+  end
+
+  def manage
+    @the_user = User.where({ :username => params.fetch("the_username") }).first
+    @the_album = Album.where({ :title => params.fetch("album_title"), :owner_id => @the_user.id}).first
+
+    render({ :template => "albums/manage.html.erb"})
+
   end
 end

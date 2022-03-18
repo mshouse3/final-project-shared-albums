@@ -52,25 +52,11 @@
   <div>
     <% if @the_album.owner.id == @current_user.id %>
       <h2>
-        Edit album
+        <a href="/users/<%= @the_album.owner.username%>/albums/<%= @the_album.title %>/edit">
+          Manage album
+        </a>
       </h2>
-
-      <form action="/modify_album/<%= @the_album.id %>"  method="post" >
-
-        <div>
-          <label for="title_box">
-            Title
-          </label>
-
-          <input type="text" id="title_box" name="query_title" value="<%= @the_album.title %>">
-        </div>
-
-        <button>
-          Update title
-        </button>
-      </form>
-    
-    <hr>
+      <hr>
     <% end %>
 
     <h2>Add photo</h2>
@@ -160,7 +146,7 @@
         </td>
 
         <td>
-          <%= a_photo.owner.username %>
+          <a href="/users/<%= a_photo.owner.username %>"><%= a_photo.owner.username %></a>
         </td>
 
         <td>
@@ -180,7 +166,7 @@
         </td>
 
         <td>
-          <a href="/photos/<%= a_photo.id %>">
+          <a href="/users/<%= @the_album.owner.username %>/albums/<%= @the_album.title %>/photos/<%= a_photo.id %>">
             Show details
           </a>
         </td>

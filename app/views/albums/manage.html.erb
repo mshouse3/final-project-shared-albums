@@ -1,0 +1,19 @@
+<h1>Manage album</h1>
+
+<h2>Edit title</h2>
+  <form action="/modify_album/<%= @the_album.id %>"  method="post" >
+
+    <div>
+      <label for="title_box">
+        Title
+      </label>
+
+      <input type="text" id="title_box" name="query_title" value="<%= @the_album.title %>">
+    </div>
+
+    <button>
+      Update title
+    </button>
+  </form>
+
+<hr>
