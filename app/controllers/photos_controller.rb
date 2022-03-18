@@ -29,9 +29,9 @@ class PhotosController < ApplicationController
 
     if the_photo.valid?
       the_photo.save
-      redirect_to("/photos", { :notice => "Photo created successfully." })
+      redirect_to("/users/#{the_photo.album.owner.username}/#{the_photo.album.title}", { :notice => "Photo created successfully." })
     else
-      redirect_to("/photos", { :alert => photo.errors.full_messages.to_sentence })
+      redirect_to("/users/#{the_photo.album.owner.username}/#{the_photo.album.title}", { :alert => the_photo.errors.full_messages.to_sentence })
     end
   end
 

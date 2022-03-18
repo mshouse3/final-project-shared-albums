@@ -17,6 +17,8 @@ class AlbumsController < ApplicationController
 
     @the_album = matching_albums.at(0)
 
+    @list_of_photos = @the_album.photos
+
     render({ :template => "albums/show.html.erb" })
   end
 
@@ -27,9 +29,9 @@ class AlbumsController < ApplicationController
 
     if the_album.valid?
       the_album.save
-      redirect_to("/albums/#{the_album.id}", { :notice => "Album created successfully." })
+      redirect_to("/users/#{the_album.owner.username}/#{the_album.title}", { :notice => "Album created successfully." })
     else
-      redirect_to("/users/#{@current_user.id}", { :alert => album.errors.full_messages.to_sentence })
+      redirect_to("/users/#{@current_user.username}", { :alert => the_album.errors.full_messages.to_sentence })
     end
   end
 
@@ -41,9 +43,9 @@ class AlbumsController < ApplicationController
 
     if the_album.valid?
       the_album.save
-      redirect_to("/albums/#{the_album.id}", { :notice => "Album updated successfully."} )
+      redirect_to("/users/#{the_album.owner.username}/#{the_album.title}", { :notice => "Album updated successfully."} )
     else
-      redirect_to("/albums/#{the_album.id}", { :alert => album.errors.full_messages.to_sentence })
+      redirect_to("/users/#{the_album.owner.username}/#{the_album.title}", { :alert => album.errors.full_messages.to_sentence })
     end
   end
 
@@ -53,6 +55,6 @@ class AlbumsController < ApplicationController
 
     the_album.destroy
 
-    redirect_to("/albums", { :notice => "Album deleted successfully."} )
+    redirect_to("/users/#{@current_user.username}/#{the_album.title}", { :notice => "Album deleted successfully."} )
   end
 end

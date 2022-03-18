@@ -34,18 +34,13 @@
       </dd>
 
       <dt>
-        Created at
+        Created at: <%= time_ago_in_words(@the_album.created_at) %> ago
       </dt>
-      <dd>
-        <%= time_ago_in_words(@the_album.created_at) %> ago
-      </dd>
+
 
       <dt>
-        Updated at
+        Updated at: <%= time_ago_in_words(@the_album.updated_at) %> ago
       </dt>
-      <dd>
-        <%= time_ago_in_words(@the_album.updated_at) %> ago
-      </dd>
     </dl>
   </div>
 </div>
@@ -112,6 +107,86 @@
       </button>
     </form>
 
+  </div>
+</div>
+
+<hr>
+<h2>Photos</h2>
+<div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          Caption
+        </th>
+
+        <th>
+          Image
+        </th>
+
+        <th>
+          Added by
+        </th>
+
+        <th>
+          Location
+        </th>
+
+        <th>
+          Likes count
+        </th>
+
+        <th>
+          Comments count
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_photos.each do |a_photo| %>
+      <tr>
+
+        <td>
+          <%= a_photo.caption %>
+        </td>
+
+        <td>
+          <img src="<%= a_photo.image %>">
+        </td>
+
+        <td>
+          <%= a_photo.owner.username %>
+        </td>
+
+        <td>
+          <%= a_photo.location %>
+        </td>
+
+        <td>
+          <%= a_photo.likes_count %>
+        </td>
+
+        <td>
+          <%= a_photo.comments_count %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_photo.created_at) %> ago
+        </td>
+
+        <td>
+          <a href="/photos/<%= a_photo.id %>">
+            Show details
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
   </div>
 </div>
 
