@@ -1,0 +1,77 @@
+<h1>Mary<%#= @current_user.username %></h1>
+
+<dl>Friends (<%# num friend requests%> pending)</dl>
+
+<h2>My Albums</h2>
+
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Name
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @list_of_my_albums.each do |an_album| %>
+  <tr>
+
+    <td>
+      <img src="<%= an_album.image %>">
+    </td>
+
+    <td>
+      <%= an_album.name %>
+    </td>
+
+    <td>
+      <a href="/albums/<%= an_album.id %>">
+        Go to album
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>
+
+<h2>All Albums</h2>
+
+<dl>Pending invitations (<%# num pending requests%> pending)</dl>
+
+<table border="1">
+  <tr>
+    <th>
+      Image
+    </th>
+
+    <th>
+      Name
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @current_user.albums.each do |an_album| %>
+  <tr>
+
+    <td>
+      <img src="<%= an_album.image %>">
+    </td>
+
+    <td>
+      <%= an_album.name %>
+    </td>
+
+    <td>
+      <a href="/albums/<%= an_album.id %>">
+        Go to album
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>

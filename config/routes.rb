@@ -131,6 +131,9 @@ Rails.application.routes.draw do
   # DELETE RECORD
   get("/cancel_user_account", { :controller => "user_authentication", :action => "destroy" })
 
+  # GO TO PROFILE
+  get("/user", { :controller => "user_authentication", :action => "show" })
+
   # ------------------------------
 
   # SIGN IN FORM

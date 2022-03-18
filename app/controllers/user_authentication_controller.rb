@@ -84,7 +84,16 @@ class UserAuthenticationController < ApplicationController
     @current_user.destroy
     reset_session
     
-    redirect_to("/", { :notice => "User account cancelled" })
+    redirect_to("/user_sign_in", { :notice => "User account cancelled" })
+  end
+
+  def show
+
+    # Get albums to display on profile
+    @list_of_my_albums = Album.where({ :owner_id => @current_user.id }).order({ :updated_at => :desc })
+    @list_of_albums = Album.where({ :owner_id => @current_user.id }).order({ :updated_at => :desc })
+
+    render({ :template => "user_authentication/profile.html.erb"})
   end
  
 end
