@@ -71,7 +71,7 @@ Rails.application.routes.draw do
   
   # UPDATE
   
-  post("/modify_friend_request/:path_id", { :controller => "friend_requests", :action => "update" })
+  post("/accept_friend_request/:path_id", { :controller => "friend_requests", :action => "accept" })
   
   # DELETE
   get("/delete_friend_request/:path_id", { :controller => "friend_requests", :action => "destroy" })

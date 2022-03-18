@@ -4,7 +4,12 @@
   <h3> My Friends (<%= @pending_requests %> pending)</h3>
 <% else %>
   <% if @no_connection %>
-      <dl>Add <%= @the_user.username %> as a friend</dl>
+      <form action="/insert_friend_request" method="post">
+        <input id="recipient_id" name="query_recipient_id" value=<%= @the_user.id %> type="hidden">
+        <button>
+          Add <%= @the_user.username %> as a friend
+        </button>
+      </form>
   <% elsif @the_friend_request_sent != nil and @the_friend_request_sent.status == "Pending" %>
     <dl>Friend request pending</dl>
   <% elsif @the_friend_request_received != nil and @the_friend_request_received.status == "Pending" %>
