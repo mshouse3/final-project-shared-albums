@@ -1,4 +1,7 @@
 <h1>Manage album</h1>
+<dl>
+  <a href="/users/<%= @the_album.owner.username %>/albums/<%= @the_album.title %>">Go back</a>
+</dl>
 
 <h2>Edit title</h2>
   <form action="/modify_album/<%= @the_album.id %>"  method="post" >
@@ -25,7 +28,8 @@
         <input id="album_id" name="query_album_id" value="<%= @the_album.id %>" type="hidden">
 
         <label for="invitee_box">Invite friends to add to your album</label>
-        <input id="invitee_box" name="query_member_id" placeholder="Enter a friend's username..." type="text">
+        <input id="invitee_box" name="query_member_name" placeholder="Enter a friend's username..." type="text">
+        
         <button>
           Invite
         </button>

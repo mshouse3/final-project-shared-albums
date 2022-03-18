@@ -98,6 +98,7 @@ class UserAuthenticationController < ApplicationController
       @list_of_my_albums = Album.where({ :owner_id => @current_user.id }).order({ :updated_at => :desc })
       # Get pending requests
       @total_friends = @current_user.sent_follow_requests_count + @current_user.received_follow_requests_count
+
     
     else # For others' profile
     
@@ -114,7 +115,7 @@ class UserAuthenticationController < ApplicationController
           @friendship = @the_friend_request_received
         end
       end
-    
+
     end
 
     render({ :template => "user_authentication/profile.html.erb"})
