@@ -3,6 +3,13 @@
 <% if @the_user.id == @current_user.id %>
   <h3> My Friends (<%#= @current_user.%> pending)</h3>
 <% else %>
+  <% if @no_connection %>
+      <dl>Add <%= @the_user.username %> as a friend</dl>
+  <% elsif @the_friend_request_sent != nil and @the_friend_request_sent.status == "Pending" %>
+    <dl>Friend request pending</dl>
+  <% elsif @the_friend_request_received != nil and @the_friend_request_received.status == "Pending" %>
+    <dl>Accept friend request</dl>
+  <% end %>
   <h3> Friends </h3>
 <% end %>
 
@@ -47,38 +54,42 @@
   </table>
 <% end %>
 
-<h2>All Albums</h2>
+<% if @the_user.id != @current_user.id and @are_friends %>
+  <h2>All Albums</h2>
 
-<table border="1">
-  <tr>
-    <th>
-      Image
-    </th>
+  <table border="1">
+    <tr>
+      <th>
+        Image
+      </th>
 
-    <th>
-      Name
-    </th>
+      <th>
+        Name
+      </th>
 
-    <th>
-    </th>
-  </tr>
+      <th>
+      </th>
+    </tr>
 
-  <% @current_user.albums.each do |an_album| %>
-  <tr>
+    <% @current_user.albums.each do |an_album| %>
+    <tr>
 
-    <td>
-      <img src="<%= an_album.image %>">
-    </td>
+      <td>
+        <img src="<%= an_album.image %>">
+      </td>
 
-    <td>
-      <%= an_album.name %>
-    </td>
+      <td>
+        <%= an_album.name %>
+      </td>
 
-    <td>
-      <a href="/albums/<%= an_album.id %>">
-        Go to album
-      </a>
-    </td>
-  </tr>
-  <% end %>
-</table>
+      <td>
+        <a href="/albums/<%= an_album.id %>">
+          Go to album
+        </a>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+<% else %>
+  <dl>Must be friends to see <%= @the_user.username %>'s albums</dl>
+<% end %>

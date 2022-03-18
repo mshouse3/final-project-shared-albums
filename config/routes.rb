@@ -147,7 +147,7 @@ Rails.application.routes.draw do
              
   #------------------------------
 
-  # GO TO PROFILE (needs to be last!!)
+  # GO TO PROFILE
   get("/users/:the_username", { :controller => "user_authentication", :action => "show" })
   get("/", { :controller => "user_authentication", :action => "show" })
 
