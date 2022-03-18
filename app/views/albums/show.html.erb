@@ -1,12 +1,12 @@
 <div>
   <div>
     <h1>
-      Album #<%= @the_album.id %> details
+      <%= @the_album.title %>
     </h1>
 
     <div>
       <div>
-        <a href="/albums">
+        <a href="/users/<%= @the_album.owner.username%>">
           Go back
         </a>
       </div>
@@ -20,10 +20,10 @@
 
     <dl>
       <dt>
-        Owner
+        Album owner
       </dt>
       <dd>
-        <%= @the_album.owner_id %>
+        <%= @the_album.owner.username %>
       </dd>
 
       <dt>
@@ -55,31 +55,63 @@
 
 <div>
   <div>
-    <h2>
-      Edit album
-    </h2>
+    <% if @the_album.owner.id == @current_user.id %>
+      <h2>
+        Edit album
+      </h2>
 
-    <form action="/modify_album/<%= @the_album.id %>"  method="post" >
+      <form action="/modify_album/<%= @the_album.id %>"  method="post" >
+
+        <div>
+          <label for="title_box">
+            Title
+          </label>
+
+          <input type="text" id="title_box" name="query_title" value="<%= @the_album.title %>">
+        </div>
+
+        <button>
+          Update title
+        </button>
+      </form>
+    
+    <hr>
+    <% end %>
+
+    <h2>Add photo</h2>
+    <form action="/insert_photo/"  method="post" >
+      
+      <input type="hidden" id="user_box" name="query_album_id" value="<%= @the_album.id %>">
       <div>
-        <label for="owner_id_box">
-          Owner
+        <label for="caption_box">
+          Caption
         </label>
 
-        <input type="text" id="owner_id_box" name="query_owner_id" value="<%= @the_album.owner_id %>">
+        <input type="text" id="caption_box" name="query_caption" rows="3" placeholder="Enter a caption...">
       </div>
 
       <div>
-        <label for="title_box">
-          Title
+        <label for="image_box">
+          Image
         </label>
 
-        <input type="text" id="title_box" name="query_title" value="<%= @the_album.title %>">
+        <input type="text" id="image_box" name="query_image" placeholder="Link your photo...">
+      </div>
+
+
+      <div>
+        <label for="location_box">
+          Location
+        </label>
+
+        <input type="text" id="location_box" name="query_location" placeholder="Add a location...">
       </div>
 
       <button>
-        Update album
+        Add photo
       </button>
     </form>
+
   </div>
 </div>
 

@@ -40,7 +40,15 @@
 <hr>
 <% if @the_user.id == @current_user.id %>
   <h2>My Albums</h2>
-  <dl>Create New Album</dl>
+  <dl>
+    <form action="/insert_album" method="post">
+      <label for="title_box">Create new album</label>
+      <input id="title_box" name="query_title" placeholder="Enter a title..." type="text">
+      <button>
+        Create new album
+      </button>
+    </form>
+  </dl>
 
   <table border="1">
     <tr>
@@ -60,15 +68,20 @@
     <tr>
 
       <td>
-        <img src="<%= an_album.image %>">
+        <%= cover_photo = an_album.photos.first %>
+        <% if cover_photo == nil %>
+          No images uploaded yet :(
+        <% else %>
+          <img src="<%= an_album.photos.first.image %>">
+        <% end %>
       </td>
 
       <td>
-        <%= an_album.name %>
+        <%= an_album.title %>
       </td>
 
       <td>
-        <a href="/albums/<%= an_album.id %>">
+        <a href="/users/<%= @the_user.username %>/<%= an_album.title %>">
           Go to album
         </a>
       </td>
@@ -107,7 +120,12 @@
     <tr>
 
       <td>
-        <img src="<%= an_album.image %>">
+        <%= cover_photo = an_album.photos.first %>
+        <% if cover_photo == nil %>
+          No images uploaded yet :(
+        <% else %>
+          <img src="<%= an_album.photos.first.image %>">
+        <% end %>
       </td>
 
       <td>
@@ -115,7 +133,7 @@
       </td>
 
       <td>
-        <a href="/albums/<%= an_album.id %>">
+        <a href="/users/<%= @the_user.username %>/<%= an_album.title %>">
           Go to album
         </a>
       </td>

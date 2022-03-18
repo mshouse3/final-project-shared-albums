@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   # READ
   get("/albums", { :controller => "albums", :action => "index" })
   
-  get("/albums/:path_id", { :controller => "albums", :action => "show" })
+  get("/users/:the_username/:album_title", { :controller => "albums", :action => "show" })
   
   # UPDATE
   

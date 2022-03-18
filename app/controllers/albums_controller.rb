@@ -9,9 +9,11 @@ class AlbumsController < ApplicationController
   end
 
   def show
-    the_id = params.fetch("path_id")
+    the_title = params.fetch("album_title")
+    the_username = params.fetch("the_username")
+    the_owner = User.where({ :username => the_username })
 
-    matching_albums = Album.where({ :id => the_id })
+    matching_albums = Album.where({ :owner => the_owner, :title => the_title })
 
     @the_album = matching_albums.at(0)
 
@@ -20,14 +22,14 @@ class AlbumsController < ApplicationController
 
   def create
     the_album = Album.new
-    the_album.owner_id = params.fetch("query_owner_id")
+    the_album.owner_id = @current_user.id
     the_album.title = params.fetch("query_title")
 
     if the_album.valid?
       the_album.save
-      redirect_to("/albums", { :notice => "Album created successfully." })
+      redirect_to("/albums/#{the_album.id}", { :notice => "Album created successfully." })
     else
-      redirect_to("/albums", { :alert => album.errors.full_messages.to_sentence })
+      redirect_to("/users/#{@current_user.id}", { :alert => album.errors.full_messages.to_sentence })
     end
   end
 
@@ -35,7 +37,6 @@ class AlbumsController < ApplicationController
     the_id = params.fetch("path_id")
     the_album = Album.where({ :id => the_id }).at(0)
 
-    the_album.owner_id = params.fetch("query_owner_id")
     the_album.title = params.fetch("query_title")
 
     if the_album.valid?

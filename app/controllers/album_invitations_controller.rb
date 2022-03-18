@@ -19,15 +19,15 @@ class AlbumInvitationsController < ApplicationController
 
   def create
     the_album_invitation = AlbumInvitation.new
-    the_album_invitation.owner_id = params.fetch("query_owner_id")
+    the_album_invitation.owner_id = @current_user.id
     the_album_invitation.member_id = params.fetch("query_member_id")
     the_album_invitation.album_id = params.fetch("query_album_id")
 
     if the_album_invitation.valid?
       the_album_invitation.save
-      redirect_to("/album_invitations", { :notice => "Album invitation created successfully." })
+      redirect_to("/#{the_album_invitation.album_id}", { :notice => "Album invitation created successfully." })
     else
-      redirect_to("/album_invitations", { :alert => album_invitation.errors.full_messages.to_sentence })
+      redirect_to("/#{the_album_invitation.album_id}", { :alert => album_invitation.errors.full_messages.to_sentence })
     end
   end
 
