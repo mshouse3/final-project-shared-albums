@@ -1,46 +1,53 @@
-<h1>Mary<%#= @current_user.username %></h1>
+<h1><%= @the_user.username %></h1>
 
-<dl>Friends (<%# num friend requests%> pending)</dl>
+<% if @the_user.id == @current_user.id %>
+  <h3> My Friends (<%#= @current_user.%> pending)</h3>
+<% else %>
+  <h3> Friends </h3>
+<% end %>
 
-<h2>My Albums</h2>
 
-<table border="1">
-  <tr>
-    <th>
-      Image
-    </th>
+<hr>
+<% if @the_user.id == @current_user.id %>
+  <h2>My Albums</h2>
+  <dl>Create New Album</dl>
 
-    <th>
-      Name
-    </th>
+  <table border="1">
+    <tr>
+      <th>
+        Image
+      </th>
 
-    <th>
-    </th>
-  </tr>
+      <th>
+        Name
+      </th>
 
-  <% @list_of_my_albums.each do |an_album| %>
-  <tr>
+      <th>
+      </th>
+    </tr>
 
-    <td>
-      <img src="<%= an_album.image %>">
-    </td>
+    <% @list_of_my_albums.each do |an_album| %>
+    <tr>
 
-    <td>
-      <%= an_album.name %>
-    </td>
+      <td>
+        <img src="<%= an_album.image %>">
+      </td>
 
-    <td>
-      <a href="/albums/<%= an_album.id %>">
-        Go to album
-      </a>
-    </td>
-  </tr>
-  <% end %>
-</table>
+      <td>
+        <%= an_album.name %>
+      </td>
+
+      <td>
+        <a href="/albums/<%= an_album.id %>">
+          Go to album
+        </a>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+<% end %>
 
 <h2>All Albums</h2>
-
-<dl>Pending invitations (<%# num pending requests%> pending)</dl>
 
 <table border="1">
   <tr>

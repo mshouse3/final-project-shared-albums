@@ -1,6 +1,6 @@
 class UserAuthenticationController < ApplicationController
   # Uncomment this if you want to force users to sign in before any other actions
-  # skip_before_action(:force_user_sign_in, { :only => [:sign_up_form, :create, :sign_in_form, :create_cookie] })
+  skip_before_action(:force_user_sign_in, { :only => [:sign_up_form, :create, :sign_in_form, :create_cookie] })
 
   def sign_in_form
     render({ :template => "user_authentication/sign_in.html.erb" })
@@ -42,9 +42,9 @@ class UserAuthenticationController < ApplicationController
     @user.password = params.fetch("query_password")
     @user.password_confirmation = params.fetch("query_password_confirmation")
     @user.username = params.fetch("query_username")
-    @user.sent_follow_requests_count = params.fetch("query_sent_follow_requests_count")
-    @user.received_follow_requests_count = params.fetch("query_received_follow_requests_count")
-    @user.own_photos_count = params.fetch("query_own_photos_count")
+    @user.sent_follow_requests_count = 0
+    @user.received_follow_requests_count = 0
+    @user.own_photos_count = 0
 
     save_status = @user.save
 
@@ -88,12 +88,26 @@ class UserAuthenticationController < ApplicationController
   end
 
   def show
-
+    @the_user = User.where({ :username => params.fetch("the_username") }).at(0)
     # Get albums to display on profile
     @list_of_my_albums = Album.where({ :owner_id => @current_user.id }).order({ :updated_at => :desc })
-    @list_of_albums = Album.where({ :owner_id => @current_user.id }).order({ :updated_at => :desc })
-
+    
     render({ :template => "user_authentication/profile.html.erb"})
+  end
+
+  def search_people
+    render({ :template => "user_authentication/search_users.html.erb"})
+  end
+
+  def find
+    
+    @the_user = User.where({ :username => params.fetch("query_username") }).at(0)
+
+    if @the_user == nil
+      redirect_to("/search_users", { :alert => "No users with that username found" })
+    else
+      redirect_to("/users/#{@the_user.username}")
+    end
   end
  
 end

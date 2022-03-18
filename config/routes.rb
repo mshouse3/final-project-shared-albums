@@ -131,8 +131,9 @@ Rails.application.routes.draw do
   # DELETE RECORD
   get("/cancel_user_account", { :controller => "user_authentication", :action => "destroy" })
 
-  # GO TO PROFILE
-  get("/user", { :controller => "user_authentication", :action => "show" })
+  # Search users
+  get("/search_users", { :controller => "user_authentication", :action => "search_people" })
+  get("/find_user", { :controller => "user_authentication", :action => "find" })
 
   # ------------------------------
 
@@ -145,5 +146,9 @@ Rails.application.routes.draw do
   get("/user_sign_out", { :controller => "user_authentication", :action => "destroy_cookies" })
              
   #------------------------------
+
+  # GO TO PROFILE (needs to be last!!)
+  get("/users/:the_username", { :controller => "user_authentication", :action => "show" })
+  get("/", { :controller => "user_authentication", :action => "show" })
 
 end
