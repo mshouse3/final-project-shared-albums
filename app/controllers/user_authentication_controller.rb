@@ -6,6 +6,12 @@ class UserAuthenticationController < ApplicationController
     render({ :template => "user_authentication/sign_in.html.erb" })
   end
 
+  def destroy_cookies
+    reset_session
+
+    redirect_to("/user_sign_in", { :notice => "Signed out successfully." })
+  end
+
   def create_cookie
     user = User.where({ :email => params.fetch("query_email") }).first
     
@@ -24,12 +30,6 @@ class UserAuthenticationController < ApplicationController
     else
       redirect_to("/user_sign_in", { :alert => "No user with that email address." })
     end
-  end
-
-  def destroy_cookies
-    reset_session
-
-    redirect_to("/", { :notice => "Signed out successfully." })
   end
 
   def sign_up_form
@@ -97,7 +97,7 @@ class UserAuthenticationController < ApplicationController
       # Get albums to display on profile
       @list_of_my_albums = Album.where({ :owner_id => @current_user.id }).order({ :updated_at => :desc })
       # Get pending requests
-      @pending_requests = @current_user.sent_follow_requests_count + @current_user.received_follow_requests_count
+      @total_friends = @current_user.sent_follow_requests_count + @current_user.received_follow_requests_count
     
     else # For others' profile
     
@@ -126,6 +126,10 @@ class UserAuthenticationController < ApplicationController
     else
       redirect_to("/users/#{@the_user.username}")
     end
+  end
+
+  def go_to_profile
+    redirect_to("/users/#{@current_user.username}")
   end
  
 end

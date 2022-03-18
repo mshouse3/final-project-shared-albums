@@ -7,7 +7,7 @@ class FriendRequestsController < ApplicationController
     @received_friend_requests = FriendRequest.where({ :recipient_id => @the_user.id, :status => "Pending" }).order({ :created_at => :desc })
     
     #Accepted
-    accepted_friends = FriendRequest.where({ :recipient_id => @the_user.id, :status => "Approved"}).or(FriendRequest.where({ :sender_id => @the_user.id, :status => "Approved"}) )
+    accepted_friends = FriendRequest.where({ :recipient_id => @the_user.id, :status => "Accepted" }).or(FriendRequest.where({ :sender_id => @the_user.id, :status => "Accepted"}) )
 
     @list_of_friends = accepted_friends.order({ :updated_at => :desc })
     
@@ -46,10 +46,7 @@ class FriendRequestsController < ApplicationController
     the_id = params.fetch("path_id")
     the_friend_request = FriendRequest.where({ :id => the_id }).at(0)
 
-    the_friend_request.sender_id = params.fetch("query_sender_id")
-    the_friend_request.recipient_id = @current_user.id
     the_friend_request.status = "Accepted"
-
     new_friend = User.where({ :id => the_friend_request.sender_id }).first
 
     if the_friend_request.valid?

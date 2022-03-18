@@ -33,13 +33,13 @@
           <li>
             <a href="/user_sign_out">Sign Out</a>
           </li>
+          <li>
+            <a href="/users/<%= @current_user.username %>">My Profile</a>
+          </li>
+          <li>
+            <a href="/search_users">Search Users</a>
+          </li>
         <% end %>
-        <li>
-          <a href="/users/<%= @current_user.username %>">My Profile</a>
-        </li>
-        <li>
-          <a href="/search_users">Search Users</a>
-        </li>
       </ul>
     </nav>
 

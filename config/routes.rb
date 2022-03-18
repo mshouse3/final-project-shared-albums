@@ -74,7 +74,7 @@ Rails.application.routes.draw do
   post("/accept_friend_request/:path_id", { :controller => "friend_requests", :action => "accept" })
   
   # DELETE
-  get("/delete_friend_request/:path_id", { :controller => "friend_requests", :action => "destroy" })
+  post("/delete_friend_request/:path_id", { :controller => "friend_requests", :action => "destroy" })
 
   #------------------------------
 
@@ -149,6 +149,6 @@ Rails.application.routes.draw do
 
   # GO TO PROFILE
   get("/users/:the_username", { :controller => "user_authentication", :action => "show" })
-  get("/", { :controller => "user_authentication", :action => "show" })
+  get("/", { :controller => "user_authentication", :action => "go_to_profile" })
 
 end

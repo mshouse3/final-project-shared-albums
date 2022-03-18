@@ -10,7 +10,7 @@
 
 <% if @the_user.id == @current_user.id %>
   <dl>Received requests
-    <% if @received_friend_requests == nil %>
+    <% if @received_friend_requests.first == nil %>
       <dd> No pending requests for now! <dd>
     <% else %>
       <div>
@@ -44,9 +44,16 @@
               </td>
 
               <td>
-                <a href="/accept_friend_request/<%= a_friend_request.id %>">
-                  Accept request
-                </a>
+                <form action="/accept_friend_request/<%= a_friend_request.id %>" method="post">
+                  <button>
+                    Accept request
+                  </button>
+                </form>
+                <form action="/delete_friend_request/<%= a_friend_request.id %>" method="post">
+                  <button>
+                    Delete request
+                  </button>
+                </form>
               </td>
             </tr>
             <% end %>
@@ -57,7 +64,7 @@
   </dl>
 
   <dl>Sent requests
-    <% if @sent_friend_requests == nil %>
+    <% if @sent_friend_requests.first == nil %>
       <dd> No pending requests for now! <dd>
     <% else %>
       <div>
@@ -105,7 +112,7 @@
 <% end %>
 
 <dl>All friends
-  <% if @list_of_friend_requests == nil %>
+  <% if @list_of_friends.first == nil %>
     <dd> No friends yet! <dd>
   <% else %>
     <div>
@@ -126,12 +133,16 @@
             </th>
           </tr>
 
-          <% @list_of_friend_requests.each do |a_friend_request| %>
+          <% @list_of_friends.each do |a_friend_request| %>
           <tr>
 
             <td>
-              <% @the_recipient = User.where({ :id => a_friend_request.recipient_id }).first.username %>
-              <%= @the_recipient %>
+              <% if @the_user.id == User.where({ :id => a_friend_request.recipient_id }).first.id %>
+                <% @the_friend = User.where({ :id => a_friend_request.sender_id }).first.username %>
+              <% else %>
+                <% @the_friend = User.where({ :id => a_friend_request.recipient_id }).first.username%>
+              <% end %>
+              <%= @the_friend %>
             </td>
 
             <td>
