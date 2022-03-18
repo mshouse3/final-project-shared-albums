@@ -19,3 +19,16 @@
 <hr>
 
 <h2>Add collaborators</h2>
+  <div>
+    <dl>
+      <form action="/insert_album_invitation" method="post">
+        <input id="album_id" name="query_album_id" value="<%= @the_album.id %>" type="hidden">
+
+        <label for="invitee_box">Invite friends to add to your album</label>
+        <input id="invitee_box" name="query_member_id" placeholder="Enter a friend's username..." type="text">
+        <button>
+          Invite
+        </button>
+      </form>
+    </dl>
+  </div>
