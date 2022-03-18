@@ -43,7 +43,7 @@ class AlbumInvitationsController < ApplicationController
       the_album_invitation.save
       redirect_to("/album_invitations/#{the_album_invitation.id}", { :notice => "Album invitation updated successfully."} )
     else
-      redirect_to("/album_invitations/#{the_album_invitation.id}", { :alert => album_invitation.errors.full_messages.to_sentence })
+      redirect_to("/album_invitations/#{the_album_invitation.id}", { :alert => the_album_invitation.errors.full_messages.to_sentence })
     end
   end
 
@@ -52,7 +52,10 @@ class AlbumInvitationsController < ApplicationController
     the_album_invitation = AlbumInvitation.where({ :id => the_id }).at(0)
 
     the_album_invitation.destroy
-
-    redirect_to("/album_invitations", { :notice => "Album invitation deleted successfully."} )
+    if the_album_invitation.album.owner==@current_user
+      redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}/edit", { :notice => "Album invitation deleted successfully."} )
+    else
+      redirect_to("/users/#{@current_user.username}/albums/#{the_album_invitation.album.title}/edit", { :notice => "Album invitation deleted successfully."} )
+    end
   end
 end

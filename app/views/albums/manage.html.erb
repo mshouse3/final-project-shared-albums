@@ -6,13 +6,11 @@
 <h2>Edit title</h2>
   <form action="/modify_album/<%= @the_album.id %>"  method="post" >
 
-    <div>
-      <label for="title_box">
-        Title
-      </label>
+    <label for="title_box">
+      Title
+    </label>
 
-      <input type="text" id="title_box" name="query_title" value="<%= @the_album.title %>">
-    </div>
+    <input type="text" id="title_box" name="query_title" value="<%= @the_album.title %>">
 
     <button>
       Update title
@@ -62,7 +60,12 @@
         </td>
 
         <td>
-          
+          <% the_album_request = AlbumInvitation.where({ :member_id => a_member.id, :owner_id => @current_user }).first%>
+          <form action="/delete_album_invitation/<%= the_album_request.id %>">
+            <button>
+              Delete collaborator
+            </button>
+          </form>
         </td>
 
       </tr>

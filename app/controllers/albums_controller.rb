@@ -10,8 +10,9 @@ class AlbumsController < ApplicationController
 
   def show
     the_title = params.fetch("album_title")
-    the_username = params.fetch("the_username")
-    the_owner = User.where({ :username => the_username })
+    the_user = params.fetch("the_username")
+    the_owner = User.where({ :username => the_user }).first
+    # @the_album_request = AlbumInvitation.where({ :member_id => @current_user.id, :owner_id => the_owner.id }).first
 
     matching_albums = Album.where({ :owner => the_owner, :title => the_title })
 
@@ -61,6 +62,7 @@ class AlbumsController < ApplicationController
   def manage
     @the_user = User.where({ :username => params.fetch("the_username") }).first
     @the_album = Album.where({ :title => params.fetch("album_title"), :owner_id => @the_user.id}).first
+    
 
     render({ :template => "albums/manage.html.erb"})
 

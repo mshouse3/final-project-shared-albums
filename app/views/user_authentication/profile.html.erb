@@ -100,7 +100,7 @@
       </form>
     </div>
   <% end %>
-  <h2>All Albums</h2>
+  <h2>Other Albums</h2>
 
   <table border="1">
     <tr>
@@ -133,9 +133,13 @@
       </td>
 
       <td>
-        <a href="/users/<%= an_album.owner.username %>/albums/<%= an_album.title %>">
-          Go to album
-        </a>
+        <% if an_album.members.where({ :id => @current_user.id }).first == nil %>
+          Cannot view album
+        <% else %>
+          <a href="/users/<%= an_album.owner.username %>/albums/<%= an_album.title %>">
+            Go to album
+          </a>
+        <% end %>
       </td>
     </tr>
     <% end %>
