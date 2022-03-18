@@ -90,7 +90,7 @@
     <h2>
       Add a new comment
     </h2>
-
+    
     <form action="/insert_comment" method="post">
       <div>
         <label for="body_box">
@@ -108,6 +108,31 @@
         Add comment
       </button>
     </form>
+
+    <% if @the_photo.fans.where({ :id => @current_user.id }).first == nil %>
+      <form action="/insert_like" method="post">
+
+        <div>
+          <input type="hidden" id="photo_id_box" name="query_photo_id" value="<%= @the_photo.id %>">
+        </div>
+
+        <button>
+          Like
+        </button>
+      </form>
+    <% else %>
+      <% the_like = Like.where({ :photo_id => @the_photo.id, :user_id => @current_user.id }).first%>
+      <form action="/delete_like/<%= the_like.id %>"
+
+        <div>
+          <input type="hidden" id="photo_id_box" name="query_photo_id" value="<%= @the_photo.id %>">
+        </div>
+
+        <button>
+          Unlike
+        </button>
+      </form>
+    <% end %>
   </div>
 </div>
 

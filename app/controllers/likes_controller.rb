@@ -25,7 +25,7 @@ class LikesController < ApplicationController
 
     if the_like.valid?
       the_like.save
-      redirect_to("/users/#{the_like.photo.album.owner.username}/albums/#{the_like.photo.album.title}/photos/#{the_like.photo.id}/likes", { :notice => "Comment created successfully." })
+      redirect_to("/users/#{the_like.photo.album.owner.username}/albums/#{the_like.photo.album.title}/photos/#{the_like.photo.id}/likes", { :notice => "You liked this photo." })
     else
       redirect_to("/users/#{the_like.photo.album.owner.username}/albums/#{the_like.photo.album.title}/photos/#{the_like.photo.id}/likes", { :alert => like.errors.full_messages.to_sentence })
     end
