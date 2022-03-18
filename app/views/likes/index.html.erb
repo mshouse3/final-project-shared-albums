@@ -1,40 +1,50 @@
 <div>
   <div>
     <h1>
-      List of all likes
+      Likes
     </h1>
   </div>
 </div>
+<dd>
+  <a href="/users/<%= @the_photo.album.owner.username %>/albums/<%= @the_photo.album.title %>/photos/<%= @the_photo.id %>">Go back to photo</a>
+</dd>
+
+<dd>
+  <img src="<%= @the_photo.image %>">
+</dd>
 
 <hr>
 
 <div>
   <div>
     <h2>
-      Add a new like
+      Like this photo
     </h2>
 
-    <form action="/insert_like" method="post">
-      <div>
-        <label for="user_id_box">
-          User
-        </label>
+    <% if @the_photo.fans.where({ :id => @current_user.id }).first == nil %>
+      <form action="/insert_like" method="post">
 
-        <input type="text" id="user_id_box" name="query_user_id">
-      </div>
+        <div>
+          <input type="hidden" id="photo_id_box" name="query_photo_id" value="<%= @the_photo.id %>">
+        </div>
 
-      <div>
-        <label for="photo_id_box">
-          Photo
-        </label>
+        <button>
+          Like
+        </button>
+      </form>
+    <% else %>
+      <% the_like = Like.where({ :photo_id => @the_photo.id, :user_id => @current_user.id }).first%>
+      <form action="/delete_like/<%= the_like.id %>"
 
-        <input type="text" id="photo_id_box" name="query_photo_id">
-      </div>
+        <div>
+          <input type="hidden" id="photo_id_box" name="query_photo_id" value="<%= @the_photo.id %>">
+        </div>
 
-      <button>
-        Create like
-      </button>
-    </form>
+        <button>
+          Unlike
+        </button>
+      </form>
+    <% end %>
   </div>
 </div>
 
@@ -43,56 +53,20 @@
   <div>
     <table border="1">
       <tr>
-        <th>
-          ID
-        </th>
 
         <th>
           User
         </th>
 
-        <th>
-          Photo
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
       </tr>
 
       <% @list_of_likes.each do |a_like| %>
       <tr>
-        <td>
-          <%= a_like.id %>
-        </td>
 
         <td>
-          <%= a_like.user_id %>
+          <%= a_like.user.username %>
         </td>
 
-        <td>
-          <%= a_like.photo_id %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_like.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_like.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/likes/<%= a_like.id %>">
-            Show details
-          </a>
-        </td>
       </tr>
       <% end %>
     </table>

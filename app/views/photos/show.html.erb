@@ -85,6 +85,32 @@
   </div>
 </div>
 
+<div>
+  <div>
+    <h2>
+      Add a new comment
+    </h2>
+
+    <form action="/insert_comment" method="post">
+      <div>
+        <label for="body_box">
+          Comment
+        </label>
+
+        <textarea id="body_box" name="query_body" rows="3"></textarea>
+      </div>
+
+      <div>
+        <input type="hidden" id="photo_id_box" name="query_photo_id" value="<%= @the_photo.id %>">
+      </div>
+
+      <button>
+        Add comment
+      </button>
+    </form>
+  </div>
+</div>
+
 
 
 <hr>
