@@ -1,8 +1,17 @@
 class FriendRequestsController < ApplicationController
-  def index
-    matching_friend_requests = FriendRequest.all
+  def list_friends
+    @the_user = User.where({ :username => params.fetch("the_username") }).first
 
-    @list_of_friend_requests = matching_friend_requests.order({ :created_at => :desc })
+    #Pending
+    @sent_friend_requests = FriendRequest.where({ :sender_id => @current_user.id, :status => "Pending" }).order({ :created_at => :desc})
+    @received_friend_requests = FriendRequest.where({ :recipient_id => @the_user.id, :status => "Pending" }).order({ :created_at => :desc })
+    
+    #Accepted
+    accepted_friends = FriendRequest.where({ :recipient_id => @the_user.id, :status => "Approved"}).or(FriendRequest.where({ :sender_id => @the_user.id, :status => "Approved"}) )
+
+    @list_of_friends = accepted_friends.order({ :updated_at => :desc })
+    
+    #accepted_friend_requests = FriendRequest.where({ })
 
     render({ :template => "friend_requests/index.html.erb" })
   end

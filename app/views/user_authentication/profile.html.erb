@@ -1,7 +1,11 @@
 <h1><%= @the_user.username %></h1>
 
 <% if @the_user.id == @current_user.id %>
-  <h3> My Friends (<%= @pending_requests %> pending)</h3>
+  <h3> 
+    <a href="/users/<%= @the_user.username %>/friends"> 
+      My Friends (<%= @pending_requests %> pending)
+    </a>
+  </h3>
 <% else %>
   <% if @no_connection %>
       <form action="/insert_friend_request" method="post">
@@ -15,7 +19,11 @@
   <% elsif @the_friend_request_received != nil and @the_friend_request_received.status == "Pending" %>
     <dl>Accept friend request</dl>
   <% end %>
-  <h3> Friends </h3>
+  <h3> 
+    <a href="/users/<%= @the_user.username %>/friends"> 
+      Friends 
+    </a>
+  </h3>
 <% end %>
 
 
@@ -59,7 +67,7 @@
   </table>
 <% end %>
 
-<% if @the_user.id != @current_user.id and @are_friends %>
+<% if @the_user.id == @current_user.id or @are_friends %>
   <h2>All Albums</h2>
 
   <table border="1">

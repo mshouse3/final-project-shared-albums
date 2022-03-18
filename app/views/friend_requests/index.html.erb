@@ -1,118 +1,154 @@
 <div>
   <div>
     <h1>
-      List of all friend requests
+      <%= @the_user.username %>'s Friends
     </h1>
   </div>
 </div>
 
 <hr>
 
-<div>
-  <div>
-    <h2>
-      Add a new friend request
-    </h2>
-
-    <form action="/insert_friend_request" method="post">
+<% if @the_user.id == @current_user.id %>
+  <dl>Received requests
+    <% if @received_friend_requests == nil %>
+      <dd> No pending requests for now! <dd>
+    <% else %>
       <div>
-        <label for="sender_id_box">
-          Sender
-        </label>
+        <div>
+          <table border="1">
+            <tr>
 
-        <input type="text" id="sender_id_box" name="query_sender_id">
+              <th>
+                Sender
+              </th>
+
+              <th>
+                Received
+              </th>
+
+              <th>
+                Action
+              </th>
+            </tr>
+
+            <% @received_friend_requests.each do |a_friend_request| %>
+            <tr>
+
+              <td>
+                <% @the_sender = User.where({ :id => a_friend_request.sender_id }).first.username %>
+                <%= @the_sender %>
+              </td>
+
+              <td>
+                <%= time_ago_in_words(a_friend_request.created_at) %> ago
+              </td>
+
+              <td>
+                <a href="/accept_friend_request/<%= a_friend_request.id %>">
+                  Accept request
+                </a>
+              </td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
       </div>
+    <% end %>
+  </dl>
 
+  <dl>Sent requests
+    <% if @sent_friend_requests == nil %>
+      <dd> No pending requests for now! <dd>
+    <% else %>
       <div>
-        <label for="recipient_id_box">
-          Recipient
-        </label>
+        <div>
+          <table border="1">
+            <tr>
 
-        <input type="text" id="recipient_id_box" name="query_recipient_id">
+              <th>
+                User
+              </th>
+
+              <th>
+                Sent
+              </th>
+
+              <th>
+                Action
+              </th>
+            </tr>
+
+            <% @sent_friend_requests.each do |a_friend_request| %>
+            <tr>
+
+              <td>
+                <% @the_recipient = User.where({ :id => a_friend_request.recipient_id }).first.username %>
+                <%= @the_recipient %>
+              </td>
+
+              <td>
+                <%= time_ago_in_words(a_friend_request.created_at) %> ago
+              </td>
+
+              <td>
+                <a href="/users/<%= @the_recipient %>">
+                  View profile
+                </a>
+              </td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
       </div>
+    <% end %>
+  </dl>
+<% end %>
 
+<dl>All friends
+  <% if @list_of_friend_requests == nil %>
+    <dd> No friends yet! <dd>
+  <% else %>
+    <div>
       <div>
-        <label for="status_box">
-          Status
-        </label>
+        <table border="1">
+          <tr>
 
-        <input type="text" id="status_box" name="query_status">
+            <th>
+              User
+            </th>
+
+            <th>
+              Friends since
+            </th>
+
+            <th>
+              Action
+            </th>
+          </tr>
+
+          <% @list_of_friend_requests.each do |a_friend_request| %>
+          <tr>
+
+            <td>
+              <% @the_recipient = User.where({ :id => a_friend_request.recipient_id }).first.username %>
+              <%= @the_recipient %>
+            </td>
+
+            <td>
+              <%= time_ago_in_words(a_friend_request.created_at) %> ago
+            </td>
+
+            <td>
+              <a href="/users/<%= @the_recipient %>">
+                View profile
+              </a>
+            </td>
+          </tr>
+          <% end %>
+        </table>
       </div>
-
-      <button>
-        Create friend request
-      </button>
-    </form>
-  </div>
-</div>
-
-<hr>
-<div>
-  <div>
-    <table border="1">
-      <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Sender
-        </th>
-
-        <th>
-          Recipient
-        </th>
-
-        <th>
-          Status
-        </th>
-
-        <th>
-          Created at
-        </th>
-
-        <th>
-          Updated at
-        </th>
-
-        <th>
-        </th>
-      </tr>
-
-      <% @list_of_friend_requests.each do |a_friend_request| %>
-      <tr>
-        <td>
-          <%= a_friend_request.id %>
-        </td>
-
-        <td>
-          <%= a_friend_request.sender_id %>
-        </td>
-
-        <td>
-          <%= a_friend_request.recipient_id %>
-        </td>
-
-        <td>
-          <%= a_friend_request.status %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_friend_request.created_at) %> ago
-        </td>
-        <td>
-          <%= time_ago_in_words(a_friend_request.updated_at) %> ago
-        </td>
-
-        <td>
-          <a href="/friend_requests/<%= a_friend_request.id %>">
-            Show details
-          </a>
-        </td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
-</div>
+    </div>
+  <% end %>
+</dl>
 
 <hr>
