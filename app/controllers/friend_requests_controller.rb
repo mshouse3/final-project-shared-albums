@@ -59,7 +59,7 @@ class FriendRequestsController < ApplicationController
 
   def destroy
     the_id = params.fetch("path_id")
-    the_friend_request = FriendRequest.where({ :id => the_id }).at(0)
+    the_friend_request = FriendRequest.where({ :id => the_id }).at(0)  
 
     the_friend_request.destroy
 

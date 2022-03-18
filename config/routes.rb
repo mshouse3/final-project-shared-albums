@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   post("/insert_comment", { :controller => "comments", :action => "create" })
           
   # READ
-  get("/comments", { :controller => "comments", :action => "index" })
+  get("/users/:the_username/albums/:album_title/photos/:photo_id/comments/", { :controller => "comments", :action => "index" })
   
   get("/comments/:path_id", { :controller => "comments", :action => "show" })
   
@@ -87,7 +87,7 @@ Rails.application.routes.draw do
   post("/insert_like", { :controller => "likes", :action => "create" })
           
   # READ
-  get("/likes", { :controller => "likes", :action => "index" })
+  get("/users/:the_username/albums/:album_title/photos/:photo_id/likes", { :controller => "likes", :action => "index" })
   
   get("/likes/:path_id", { :controller => "likes", :action => "show" })
   

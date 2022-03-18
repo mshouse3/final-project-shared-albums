@@ -50,18 +50,23 @@
       </dd>
 
       <dt>
-        Likes count
+        <a href="/users/<%= @the_photo.album.owner.username %>/albums/<%= @the_photo.album.title%>/photos/<%= @the_photo.id %>/likes">
+          Likes (<%= @the_photo.likes_count %>)
+        </a>
       </dt>
       <dd>
-        <%= @the_photo.likes_count %>
       </dd>
 
       <dt>
-        Comments count
+        <a href="/users/<%= @the_photo.album.owner.username %>/albums/<%= @the_photo.album.title%>/photos/<%= @the_photo.id %>/comments">
+          Comments (<%= @the_photo.comments_count %>)
+        </a>
       </dt>
-      <dd>
-        <%= @the_photo.comments_count %>
-      </dd>
+      <% @the_photo.comments.each do |a_comment| %>
+        <dd>
+          "<%= a_comment.body %>" - <%= a_comment.commenter.username%>
+        </dd>
+      <% end %>
 
       <dt>
         Created at
@@ -79,6 +84,8 @@
     </dl>
   </div>
 </div>
+
+
 
 <hr>
 

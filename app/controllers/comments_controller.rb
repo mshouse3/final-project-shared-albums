@@ -1,8 +1,9 @@
 class CommentsController < ApplicationController
   def index
-    matching_comments = Comment.all
+    @the_photo = Photo.where({ :id => params.fetch("photo_id") }).first
+    matching_comments = @the_photo.comments
 
-    @list_of_comments = matching_comments.order({ :created_at => :desc })
+    @list_of_comments = matching_comments.order({ :updated_at => :desc })
 
     render({ :template => "comments/index.html.erb" })
   end
@@ -20,14 +21,14 @@ class CommentsController < ApplicationController
   def create
     the_comment = Comment.new
     the_comment.body = params.fetch("query_body")
-    the_comment.commenter_id = params.fetch("query_commenter_id")
+    the_comment.commenter_id = @current_user.id
     the_comment.photo_id = params.fetch("query_photo_id")
 
     if the_comment.valid?
       the_comment.save
-      redirect_to("/comments", { :notice => "Comment created successfully." })
+      redirect_to("/users/#{the_comment.photo.album.owner.username}/albums/#{the_comment.photo.album.title}/photos/#{the_comment.photo.id}/comments", { :notice => "Comment created successfully." })
     else
-      redirect_to("/comments", { :alert => comment.errors.full_messages.to_sentence })
+      redirect_to("/users/#{the_comment.photo.album.owner.username}/albums/#{the_comment.photo.album.title}/photos/#{the_comment.photo.id}/comments", { :alert => comment.errors.full_messages.to_sentence })
     end
   end
 
@@ -50,9 +51,10 @@ class CommentsController < ApplicationController
   def destroy
     the_id = params.fetch("path_id")
     the_comment = Comment.where({ :id => the_id }).at(0)
+    the_photo = the_comment.photo
 
     the_comment.destroy
 
-    redirect_to("/comments", { :notice => "Comment deleted successfully."} )
+    redirect_to("/users/#{the_photo.album.owner.username}/albums/#{the_photo.album.title}/photos/#{the_photo.id}/comments", { :notice => "Comment deleted successfully."} )
   end
 end

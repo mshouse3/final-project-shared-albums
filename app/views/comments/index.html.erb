@@ -1,10 +1,17 @@
 <div>
   <div>
     <h1>
-      List of all comments
+      <%= @the_photo.owner.username %>'s photo comments
     </h1>
   </div>
 </div>
+<dd>
+  <a href="/users/<%= @the_photo.album.owner.username %>/albums/<%= @the_photo.album.title %>/photos/<%= @the_photo.id %>">Go back to photo</a>
+</dd>
+
+<dd>
+  <img src="<%= @the_photo.image %>">
+</dd>
 
 <hr>
 
@@ -17,30 +24,18 @@
     <form action="/insert_comment" method="post">
       <div>
         <label for="body_box">
-          Body
+          Comment
         </label>
 
         <textarea id="body_box" name="query_body" rows="3"></textarea>
       </div>
 
       <div>
-        <label for="commenter_id_box">
-          Commenter
-        </label>
-
-        <input type="text" id="commenter_id_box" name="query_commenter_id">
-      </div>
-
-      <div>
-        <label for="photo_id_box">
-          Photo
-        </label>
-
-        <input type="text" id="photo_id_box" name="query_photo_id">
+        <input type="hidden" id="photo_id_box" name="query_photo_id" value="<%= @the_photo.id %>">
       </div>
 
       <button>
-        Create comment
+        Add comment
       </button>
     </form>
   </div>
@@ -51,20 +46,13 @@
   <div>
     <table border="1">
       <tr>
-        <th>
-          ID
-        </th>
-
-        <th>
-          Body
-        </th>
 
         <th>
           Commenter
         </th>
-
+        
         <th>
-          Photo
+          Body
         </th>
 
         <th>
@@ -80,21 +68,13 @@
       </tr>
 
       <% @list_of_comments.each do |a_comment| %>
-      <tr>
+
         <td>
-          <%= a_comment.id %>
+          <%= a_comment.commenter.username %>
         </td>
 
         <td>
           <%= a_comment.body %>
-        </td>
-
-        <td>
-          <%= a_comment.commenter_id %>
-        </td>
-
-        <td>
-          <%= a_comment.photo_id %>
         </td>
 
         <td>
@@ -104,11 +84,13 @@
           <%= time_ago_in_words(a_comment.updated_at) %> ago
         </td>
 
-        <td>
-          <a href="/comments/<%= a_comment.id %>">
-            Show details
-          </a>
-        </td>
+        <% if a_comment.commenter_id == @current_user.id || @the_photo.owner.id == @current_user.id || @the_photo.album.owner.id == @current_user.id%>
+          <td>
+            <a href="/delete_comment/<%= a_comment.id %>">
+              Delete comment
+            </a>
+          </td>
+        <% end %>
       </tr>
       <% end %>
     </table>
