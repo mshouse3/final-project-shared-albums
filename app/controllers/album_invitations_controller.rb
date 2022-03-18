@@ -50,12 +50,13 @@ class AlbumInvitationsController < ApplicationController
   def destroy
     the_id = params.fetch("path_id")
     the_album_invitation = AlbumInvitation.where({ :id => the_id }).at(0)
-
+    the_album_owner = User.where({ :id => the_album_invitation.owner_id }).first
     the_album_invitation.destroy
-    if the_album_invitation.album.owner==@current_user
-      redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}/edit", { :notice => "Album invitation deleted successfully."} )
-    else
+
+    if the_album_owner.id == @current_user.id
       redirect_to("/users/#{@current_user.username}/albums/#{the_album_invitation.album.title}/edit", { :notice => "Album invitation deleted successfully."} )
+    else
+      redirect_to("/users/#{@current_user.username}", { :notice => "Album invitation deleted successfully."} )
     end
   end
 

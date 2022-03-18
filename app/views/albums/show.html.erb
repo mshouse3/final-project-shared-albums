@@ -13,7 +13,8 @@
 
       <% if @the_album.owner.id != @current_user.id %>
         <div>
-          <a href="/delete_album_invitation/<%= @the_album.id %>">
+          <% the_album_invitation = AlbumInvitation.where({ :member_id => @current_user.id, :album_id => @the_album.id }).first%>
+          <a href="/delete_album_invitation/<%= the_album_invitation.id %>">
             Leave album
           </a>
         </div>
