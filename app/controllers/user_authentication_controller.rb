@@ -107,6 +107,13 @@ class UserAuthenticationController < ApplicationController
       @no_connection = @the_friend_request_sent == nil && @the_friend_request_received == nil
       #@pending_connection = @the_friend_request_sent != nil and @the_friend_request_sent.status == "Pending" or @the_friend_request_received != nil and @the_friend_request_received.status == "Pending"
       @are_friends = @the_friend_request_sent != nil && @the_friend_request_sent.status == "Accepted" || @the_friend_request_received != nil && @the_friend_request_received.status == "Accepted"
+      if @are_friends
+        if @the_friend_request_received == nil
+          @friendship = @the_friend_request_sent
+        else
+          @friendship = @the_friend_request_received
+        end
+      end
     
     end
 

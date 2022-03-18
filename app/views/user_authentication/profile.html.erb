@@ -17,7 +17,17 @@
   <% elsif @the_friend_request_sent != nil and @the_friend_request_sent.status == "Pending" %>
     <dl>Friend request pending</dl>
   <% elsif @the_friend_request_received != nil and @the_friend_request_received.status == "Pending" %>
-    <dl>Accept friend request</dl>
+    <dl>
+      <form action="/accept_friend_request/<%= @the_friend_request_received.id %>" method="post">
+        <button>
+          Accept request
+        </button>
+      </form>
+      <form action="/delete_friend_request/<%= @the_friend_request_received.id %>" method="post">
+        <button>
+          Delete request
+        </button>
+    </dl>
   <% end %>
   <h3> 
     <a href="/users/<%= @the_user.username %>/friends"> 
@@ -68,6 +78,15 @@
 <% end %>
 
 <% if @the_user.id == @current_user.id or @are_friends %>
+  <% if @are_friends %>
+    <div>
+      <form action="/delete_friend_request/<%= @friendship.id %>" method="post">
+        <button>
+          Remove friend
+        </button>
+      </form>
+    </div>
+  <% end %>
   <h2>All Albums</h2>
 
   <table border="1">
