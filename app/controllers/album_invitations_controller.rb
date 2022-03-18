@@ -74,9 +74,9 @@ class AlbumInvitationsController < ApplicationController
 
     if the_album_invitation.valid?
       the_album_invitation.save
-      redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}/edit", { :notice => "Album created successfully." })
+      redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}", { :notice => "Album created successfully." })
     else
-      redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}/edit", { :alert => the_album_invitation.errors.full_messages.to_sentence })
+      redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}", { :alert => the_album_invitation.errors.full_messages.to_sentence })
     end
   end
 end
