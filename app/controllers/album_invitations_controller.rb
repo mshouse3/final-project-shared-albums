@@ -19,15 +19,21 @@ class AlbumInvitationsController < ApplicationController
 
   def create
     the_album_invitation = AlbumInvitation.new
-    the_album_invitation.owner_id = @current_user.id
-    the_album_invitation.member_id = User.where({ :username => params.fetch("query_member_name") }).first.id
-    the_album_invitation.album_id = params.fetch("query_album_id")
+    if User.where({ :username => params.fetch("query_member_name") }).first != nil 
+    
+      the_album_invitation.owner_id = @current_user.id
+      the_album_invitation.member_id = User.where({ :username => params.fetch("query_member_name") }).first.id
+      the_album_invitation.album_id = params.fetch("query_album_id")
 
-    if the_album_invitation.valid?
-      the_album_invitation.save
-      redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}/edit", { :notice => "Album invitation created successfully." })
+      if the_album_invitation.valid?
+        the_album_invitation.save
+        redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}/edit", { :notice => "Album invitation created successfully." })
+      else
+        redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}/edit", { :alert => the_album_invitation.errors.full_messages.to_sentence })
+      end
+
     else
-      redirect_to("/users/#{the_album_invitation.owner.username}/albums/#{the_album_invitation.album.title}/edit", { :alert => the_album_invitation.errors.full_messages.to_sentence })
+      redirect_to("/users/#{@current_user.username}/albums/#{Album.where({ :id => params.fetch("query_album_id") }).first.title}/edit", { :alert => "User not found." })
     end
   end
 
