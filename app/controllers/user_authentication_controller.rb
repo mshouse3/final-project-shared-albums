@@ -96,6 +96,7 @@ class UserAuthenticationController < ApplicationController
 
       # Get albums to display on profile
       @list_of_my_albums = Album.where({ :owner_id => @current_user.id }).order({ :updated_at => :desc })
+      @list_of_albums = @current_user.albums
       # Get pending requests
       @total_friends = @current_user.sent_follow_requests_count + @current_user.received_follow_requests_count
 

@@ -36,3 +36,37 @@
       </form>
     </dl>
   </div>
+
+  <hr>
+
+  <h2>View Collaborators</h2>
+  <div>
+  <div>
+    <table border="1">
+      <tr>
+        <th>
+          User
+        </th>
+
+        <th>
+          Action
+        </th>
+
+      </tr>
+
+      <% @the_album.members.each do |a_member| %>
+      <tr>
+
+        <td>
+          <a href="/users/<%= a_member.username %>"><%= a_member.username %></a>
+        </td>
+
+        <td>
+          
+        </td>
+
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

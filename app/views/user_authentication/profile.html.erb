@@ -81,7 +81,7 @@
       </td>
 
       <td>
-        <a href="/users/<%= @the_user.username %>/albums/<%= an_album.title %>">
+        <a href="/users/<%= an_album.owner.username %>/albums/<%= an_album.title %>">
           Go to album
         </a>
       </td>
@@ -129,11 +129,11 @@
       </td>
 
       <td>
-        <%= an_album.name %>
+        <%= an_album.title %>
       </td>
 
       <td>
-        <a href="/users/<%= @the_user.username %>/<%= an_album.title %>">
+        <a href="/users/<%= an_album.owner.username %>/albums/<%= an_album.title %>">
           Go to album
         </a>
       </td>
