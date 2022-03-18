@@ -1,7 +1,7 @@
 <h1><%= @the_user.username %></h1>
 
 <% if @the_user.id == @current_user.id %>
-  <h3> My Friends (<%#= @current_user.%> pending)</h3>
+  <h3> My Friends (<%= @pending_requests %> pending)</h3>
 <% else %>
   <% if @no_connection %>
       <dl>Add <%= @the_user.username %> as a friend</dl>

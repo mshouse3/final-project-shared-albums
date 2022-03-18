@@ -90,14 +90,25 @@ class UserAuthenticationController < ApplicationController
   def show
     # Get user's profile
     @the_user = User.where({ :username => params.fetch("the_username") }).at(0)
-    # Get albums to display on profile
-    @list_of_my_albums = Album.where({ :owner_id => @current_user.id }).order({ :updated_at => :desc })
-    # Get friend status
-    @the_friend_request_sent = FriendRequest.where({ :sender_id => @current_user.id, :recipient_id => @the_user.id }).at(0)
-    @the_friend_request_received = FriendRequest.where({ :sender_id => @the_user.id, :recipient_id => @current_user.id }).at(0)
-    @no_connection = @the_friend_request_sent == nil and @the_friend_request_received == nil
-    #@pending_connection = @the_friend_request_sent != nil and @the_friend_request_sent.status == "Pending" or @the_friend_request_received != nil and @the_friend_request_received.status == "Pending"
-    @are_friends = @the_friend_request_sent != nil and @the_friend_request_sent.status == "Approved" or @the_friend_request_received != nil and @the_friend_request_received.status == "Approved"
+    
+    # For own profile
+    if @the_user.id == @current_user.id
+
+      # Get albums to display on profile
+      @list_of_my_albums = Album.where({ :owner_id => @current_user.id }).order({ :updated_at => :desc })
+      # Get pending requests
+      @pending_requests = @current_user.sent_follow_requests_count + @current_user.received_follow_requests_count
+    
+    else # For others' profile
+    
+      # Get friend status
+      @the_friend_request_sent = FriendRequest.where({ :sender_id => @current_user.id, :recipient_id => @the_user.id }).at(0)
+      @the_friend_request_received = FriendRequest.where({ :sender_id => @the_user.id, :recipient_id => @current_user.id }).at(0)
+      @no_connection = @the_friend_request_sent == nil and @the_friend_request_received == nil
+      #@pending_connection = @the_friend_request_sent != nil and @the_friend_request_sent.status == "Pending" or @the_friend_request_received != nil and @the_friend_request_received.status == "Pending"
+      @are_friends = @the_friend_request_sent != nil and @the_friend_request_sent.status == "Approved" or @the_friend_request_received != nil and @the_friend_request_received.status == "Approved"
+    
+    end
 
     render({ :template => "user_authentication/profile.html.erb"})
   end
