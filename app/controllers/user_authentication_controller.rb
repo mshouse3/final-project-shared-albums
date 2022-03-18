@@ -104,9 +104,9 @@ class UserAuthenticationController < ApplicationController
       # Get friend status
       @the_friend_request_sent = FriendRequest.where({ :sender_id => @current_user.id, :recipient_id => @the_user.id }).at(0)
       @the_friend_request_received = FriendRequest.where({ :sender_id => @the_user.id, :recipient_id => @current_user.id }).at(0)
-      @no_connection = @the_friend_request_sent == nil and @the_friend_request_received == nil
+      @no_connection = @the_friend_request_sent == nil && @the_friend_request_received == nil
       #@pending_connection = @the_friend_request_sent != nil and @the_friend_request_sent.status == "Pending" or @the_friend_request_received != nil and @the_friend_request_received.status == "Pending"
-      @are_friends = @the_friend_request_sent != nil and @the_friend_request_sent.status == "Approved" or @the_friend_request_received != nil and @the_friend_request_received.status == "Approved"
+      @are_friends = @the_friend_request_sent != nil && @the_friend_request_sent.status == "Accepted" || @the_friend_request_received != nil && @the_friend_request_received.status == "Accepted"
     
     end
 
