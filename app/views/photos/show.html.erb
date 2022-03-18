@@ -1,21 +1,16 @@
 <div>
   <div>
     <h1>
-      Photo #<%= @the_photo.id %> details
+      Photo details
     </h1>
 
     <div>
       <div>
-        <a href="/photos">
+        <a href="/users/<%= @the_photo.album.owner.username %>/albums/<%= @the_photo.album.title %>">
           Go back
         </a>
       </div>
 
-      <div>
-        <a href="/delete_photo/<%= @the_photo.id %>">
-          Delete photo
-        </a>
-      </div>
     </div>
 
     <dl>
@@ -30,14 +25,14 @@
         Image
       </dt>
       <dd>
-        <%= @the_photo.image %>
+        <img src="<%= @the_photo.image %>">
       </dd>
 
       <dt>
-        Owner
+        Poster
       </dt>
       <dd>
-        <%= @the_photo.owner_id %>
+        <%= @the_photo.owner.username %>
       </dd>
 
       <dt>
@@ -51,7 +46,7 @@
         Album
       </dt>
       <dd>
-        <%= @the_photo.album_id %>
+        <%= @the_photo.album.title %>
       </dd>
 
       <dt>
@@ -87,75 +82,54 @@
 
 <hr>
 
-
-<div>
+<% if @the_photo.owner.id == @current_user.id %>
   <div>
-    <h2>
-      Edit photo
-    </h2>
+    <div>
+      <h2>
+        Edit photo
+      </h2>
 
-    <form action="/modify_photo/<%= @the_photo.id %>"  method="post" >
-      <div>
-        <label for="caption_box">
-          Caption
-        </label>
+      <form action="/modify_photo/<%= @the_photo.id %>"  method="post" >
+        <div>
+          <label for="caption_box">
+            Caption
+          </label>
 
-        <input type="text" id="caption_box" name="query_caption" value="<%= @the_photo.caption %>">
-      </div>
+          <input type="text" id="caption_box" name="query_caption" value="<%= @the_photo.caption %>">
+        </div>
 
-      <div>
-        <label for="image_box">
-          Image
-        </label>
+        <div>
+          <label for="image_box">
+            Image
+          </label>
 
-        <input type="text" id="image_box" name="query_image" value="<%= @the_photo.image %>">
-      </div>
+          <input type="text" id="image_box" name="query_image" value="<%= @the_photo.image %>">
+        </div>
 
-      <div>
-        <label for="owner_id_box">
-          Owner
-        </label>
+        <div>
+          <label for="location_box">
+            Location
+          </label>
 
-        <input type="text" id="owner_id_box" name="query_owner_id" value="<%= @the_photo.owner_id %>">
-      </div>
+          <input type="text" id="location_box" name="query_location" value="<%= @the_photo.location %>">
+        </div>
 
-      <div>
-        <label for="location_box">
-          Location
-        </label>
-
-        <input type="text" id="location_box" name="query_location" value="<%= @the_photo.location %>">
-      </div>
-
-      <div>
-        <label for="album_id_box">
-          Album
-        </label>
-
-        <input type="text" id="album_id_box" name="query_album_id" value="<%= @the_photo.album_id %>">
-      </div>
-
-      <div>
-        <label for="likes_count_box">
-          Likes count
-        </label>
-
-        <input type="text" id="likes_count_box" name="query_likes_count" value="<%= @the_photo.likes_count %>">
-      </div>
-
-      <div>
-        <label for="comments_count_box">
-          Comments count
-        </label>
-
-        <input type="text" id="comments_count_box" name="query_comments_count" value="<%= @the_photo.comments_count %>">
-      </div>
-
-      <button>
-        Update photo
-      </button>
-    </form>
+        <button>
+          Update photo
+        </button>
+      </form>
+    </div>
   </div>
-</div>
+<% end %>
+
+<% if @the_photo.album.owner.id == @current_user.id %>
+  <form action="/delete_photo/<%= @the_photo.id %>"  method="post" >
+    <div>
+      <button>
+          Delete photo
+      </button>
+    </div>
+  </form>
+<% end %>
 
 <hr>

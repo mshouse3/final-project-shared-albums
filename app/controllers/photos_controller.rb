@@ -41,17 +41,13 @@ class PhotosController < ApplicationController
 
     the_photo.caption = params.fetch("query_caption")
     the_photo.image = params.fetch("query_image")
-    the_photo.owner_id = params.fetch("query_owner_id")
     the_photo.location = params.fetch("query_location")
-    the_photo.album_id = params.fetch("query_album_id")
-    the_photo.likes_count = params.fetch("query_likes_count")
-    the_photo.comments_count = params.fetch("query_comments_count")
 
     if the_photo.valid?
       the_photo.save
-      redirect_to("/photos/#{the_photo.id}", { :notice => "Photo updated successfully."} )
+      redirect_to("/users/#{the_photo.album.owner.username}/albums/#{the_photo.album.title}", { :notice => "Photo updated successfully."} )
     else
-      redirect_to("/photos/#{the_photo.id}", { :alert => photo.errors.full_messages.to_sentence })
+      redirect_to("/users/#{the_photo.album.owner.username}/albums/#{the_photo.album.title}/photos/#{the_photo.id}", { :alert => the_photo.errors.full_messages.to_sentence })
     end
   end
 
